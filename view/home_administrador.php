@@ -1,64 +1,108 @@
-
-<?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-}
-
-// Dependiendo del rol, puedes mostrar diferentes secciones o menús
-$role = $_SESSION['role'];
-?>
-
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Administración</title>
-    <link rel="stylesheet" href="../css/styles.css"> <!-- Ajusta la ruta según tu estructura -->
+    <title>Panel de Administrador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav {
+            margin: 20px;
+            background-color: #333;
+            padding: 10px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        section {
+            margin: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        h2 {
+            color: #333;
+        }
+        ul.actions {
+            list-style: none;
+            padding: 0;
+        }
+        ul.actions li {
+            margin-bottom: 10px;
+        }
+        ul.actions li a {
+            text-decoration: none;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            display: inline-block;
+            border-radius: 5px;
+        }
+        ul.actions li a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
-
 <body>
-    <header class="banner">
-        <h1>Dashboard de Administración - Almacén de Peluches</h1>
+
+    <header>
+        <h1>Panel de Administración</h1>
     </header>
 
-    <nav class="navigation">
-        <ul>
-            <li><a href="usuarios.php">Gestión de Usuarios</a></li>
-            <li><a href="roles.php">Gestión de Roles</a></li>
-            <li><a href="permisos.php">Gestión de Permisos</a></li>
-            <li><a href="acceso.php">Control de Acceso</a></li>
-            <li><a href="dashboard.php">Panel de Administración</a></li>
-            <li><a href="../view/index.php">Cerrar Sesión</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h2>Bienvenido al sistema de administración del almacén de peluches</h2>
-        <?php if ($role == 'Administrador'): ?>
-            <h2>Panel de Administrador</h2>
-            <!-- Contenido específico para el Administrador -->
-        <?php elseif ($role == 'Editor'): ?>
-            <h2>Panel de Editor</h2>
-            <!-- Contenido específico para el Editor -->
-        <?php else: ?>
-            <h2>Panel de Usuario Regular</h2>
-            <!-- Contenido específico para el Usuario Regular -->
-        <?php endif; ?>
-        <section>
-            <p>Selecciona una opción del menú para comenzar.</p>
-        </section>
-        <section class="image-section">
-            <img src="../public/pelucheshome.png" alt="Almacén de Peluches" />
-        </section>
-    </main>
 
+    <section>
+        <h2>Bienvenido, Admin</h2>
+        <p>Desde este panel, puedes gestionar todas las funcionalidades del sistema.</p>
+
+        <div>
+            <h3>Acciones rápidas:</h3>
+            <ul class="actions">
+                <li><a href="add-user.php">Agregar nuevo usuario</a></li>
+                <li><a href="add-content.php">Crear nuevo contenido</a></li>
+                <li><a href="global-settings.php">Modificar configuraciones globales</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Gestión de Usuarios y Roles:</h3>
+            <ul class="actions">
+                <li><a href="view-all-users.php">Ver todos los usuarios registrados</a></li>
+                <li><a href="assign-roles.php">Asignar o revocar roles a los usuarios</a></li>
+                <li><a href="create-roles.php">Crear nuevos roles y asignar permisos</a></li>
+                <li><a href="audit-log.php">Consultar registro de auditoría</a></li>
+            </ul>
+        </div>
+    </section>
 
     <footer>
-        <p>© 2024 Almacén de Peluches. Todos los derechos reservados.</p>
+        <p>© 2024 Administración del Sistema. Todos los derechos reservados.</p>
     </footer>
-</body>
 
+</body>
 </html>

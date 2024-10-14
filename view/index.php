@@ -9,8 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Consulta para verificar usuario y rol
-    $query = "SELECT * FROM usuarios WHERE email = :email AND password = :password";
+    // Consulta para verificar usuario y obtener su rol
+    $query = "
+        SELECT r.nombre AS role
+        FROM usuarios u
+        JOIN usuarios_roles ur ON u.id = ur.usuario_id
+        JOIN roles r ON ur.rol_id = r.id
+        WHERE u.email = :email AND u.password = :password
+    ";
+    
     $stmt = $conn->prepare($query);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':password', $password);
@@ -18,22 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($stmt->rowCount() == 1) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['role'] = $user['role']; // Asumiendo que tienes una columna 'role' en la tabla de usuarios
+        $_SESSION['role'] = $user['role'];
 
         // Redirección basada en el rol
         switch ($_SESSION['role']) {
-            case 'administrador':
+            case 'Administrador':
                 header('Location: home_administrador.php');
                 break;
-            case 'usuario':
+            case 'Usuario':
                 header('Location: home_clientes.php');
                 break;
-            case 'editor':
+            case 'Editor':
                 header('Location: home_editor.php');
                 break;
             default:
-                // Redirección a una página por defecto si el rol no coincide con ningún caso
                 header('Location: home_default.php');
                 break;
         }
@@ -43,16 +48,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Almacén de Peluches</title>
-    <link rel="stylesheet" href="../css/styles_index.css"> <!-- Ajusta la ruta según tu estructura -->
+    <link rel="stylesheet" href="../css/styles_index.css">
 </head>
-<body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
         <?php if (!empty($error)) { echo "<p class='error'>$error</p>"; } ?>
@@ -63,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" name="password" required>
             <button type="submit">Ingresar</button>
         </form>
+        <p>¿No tienes cuenta? <a href="../view/user_auth/registro.php">Regístrate aquí</a></p>
     </div>
 </body>
 </html>

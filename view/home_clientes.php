@@ -93,7 +93,6 @@
 
     <nav>
         <ul>
-            <li><a href="user_view.php">Volver al Panel</a></li>
             <li><a href="logout.php">Cerrar Sesión</a></li>
         </ul>
     </nav>

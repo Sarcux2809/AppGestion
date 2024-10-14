@@ -32,7 +32,7 @@ $role = $_SESSION['role'];
             <li><a href="permisos.php">Gestión de Permisos</a></li>
             <li><a href="acceso.php">Control de Acceso</a></li>
             <li><a href="dashboard.php">Panel de Administración</a></li>
-            <li><a href="../view/login.php">Cerrar Sesión</a></li>
+            <li><a href="../view/index.php">Cerrar Sesión</a></li>
         </ul>
     </nav>
     <main>

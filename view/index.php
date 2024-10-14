@@ -21,7 +21,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role'] = $user['role']; // Asumiendo que tienes una columna 'role' en la tabla de usuarios
 
-        header('Location: home_administrador.php');
+        // Redirección basada en el rol
+        switch ($_SESSION['role']) {
+            case 'administrador':
+                header('Location: home_administrador.php');
+                break;
+            case 'usuario':
+                header('Location: home_clientes.php');
+                break;
+            case 'editor':
+                header('Location: home_editor.php');
+                break;
+            default:
+                // Redirección a una página por defecto si el rol no coincide con ningún caso
+                header('Location: home_default.php');
+                break;
+        }
         exit();
     } else {
         $error = "Credenciales incorrectas";

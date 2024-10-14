@@ -1,63 +1,53 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-}
+include '../config/database.php';
 
-// Dependiendo del rol, puedes mostrar diferentes secciones o menús
-$role = $_SESSION['role'];
+$database = new Database();
+$conn = $database->getConnection();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Consulta para verificar usuario y rol
+    $query = "SELECT * FROM usuarios WHERE email = :email AND password = :password";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':password', $password);
+    $stmt->execute();
+
+    if ($stmt->rowCount() == 1) {
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['role'] = $user['role']; // Asumiendo que tienes una columna 'role' en la tabla de usuarios
+
+        header('Location: home_administrador.php');
+        exit();
+    } else {
+        $error = "Credenciales incorrectas";
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Administración</title>
+    <title>Login - Almacén de Peluches</title>
     <link rel="stylesheet" href="../css/styles.css"> <!-- Ajusta la ruta según tu estructura -->
 </head>
-
 <body>
-    <header class="banner">
-        <h1>Dashboard de Administración - Almacén de Peluches</h1>
-    </header>
-
-    <nav class="navigation">
-        <ul>
-            <li><a href="usuarios.php">Gestión de Usuarios</a></li>
-            <li><a href="roles.php">Gestión de Roles</a></li>
-            <li><a href="permisos.php">Gestión de Permisos</a></li>
-            <li><a href="acceso.php">Control de Acceso</a></li>
-            <li><a href="dashboard.php">Panel de Administración</a></li>
-            <li><a href="../view/login.php">Cerrar Sesión</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h2>Bienvenido al sistema de administración del almacén de peluches</h2>
-        <?php if ($role == 'Administrador'): ?>
-            <h2>Panel de Administrador</h2>
-            <!-- Contenido específico para el Administrador -->
-        <?php elseif ($role == 'Editor'): ?>
-            <h2>Panel de Editor</h2>
-            <!-- Contenido específico para el Editor -->
-        <?php else: ?>
-            <h2>Panel de Usuario Regular</h2>
-            <!-- Contenido específico para el Usuario Regular -->
-        <?php endif; ?>
-        <section>
-            <p>Selecciona una opción del menú para comenzar.</p>
-        </section>
-        <section class="image-section">
-            <img src="../public/pelucheshome.png" alt="Almacén de Peluches" />
-        </section>
-    </main>
-
-
-    <footer>
-        <p>© 2024 Almacén de Peluches. Todos los derechos reservados.</p>
-    </footer>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <?php if (!empty($error)) { echo "<p class='error'>$error</p>"; } ?>
+        <form method="POST" action="">
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" required>
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
 </body>
-
 </html>

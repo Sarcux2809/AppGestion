@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Almacén de Peluches</title>
-    <link rel="stylesheet" href="../css/styles.css"> <!-- Ajusta la ruta según tu estructura -->
+    <link rel="stylesheet" href="../css/styles_index.css"> <!-- Ajusta la ruta según tu estructura -->
 </head>
 <body>
     <div class="login-container">

@@ -101,7 +101,7 @@
         <h2>Nuestra Colección</h2>
 
         <div class="peluche">
-            <img src="peluche1.jpg" alt="Oso de peluche">
+            <img src="../public/peluche_vistacliente/peluche1.jpg" alt="Oso de peluche">
             <h3>Oso de Peluche</h3>
             <p>Un tierno y suave oso de peluche. Perfecto para abrazar.</p>
             <p>Precio: $15.00</p>
@@ -109,7 +109,7 @@
         </div>
 
         <div class="peluche">
-            <img src="peluche2.jpg" alt="Peluche de unicornio">
+            <img src="../public/peluche_vistacliente/unicornio.jpeg" alt="Peluche de unicornio">
             <h3>Peluche de Unicornio</h3>
             <p>Un peluche mágico de unicornio con colores brillantes.</p>
             <p>Precio: $20.00</p>
@@ -117,7 +117,7 @@
         </div>
 
         <div class="peluche">
-            <img src="peluche3.jpg" alt="Peluche de panda">
+            <img src="../public/peluche_vistacliente/panda.jpeg" alt="Peluche de panda">
             <h3>Peluche de Panda</h3>
             <p>Este panda adorable será el mejor compañero de tus siestas.</p>
             <p>Precio: $18.00</p>
@@ -125,7 +125,7 @@
         </div>
 
         <div class="peluche">
-            <img src="peluche4.jpg" alt="Peluche de conejo">
+            <img src="../public/peluche_vistacliente/conejo.jpg" alt="Peluche de conejo">
             <h3>Peluche de Conejo</h3>
             <p>Un lindo conejito con orejas largas y suaves.</p>
             <p>Precio: $12.00</p>
